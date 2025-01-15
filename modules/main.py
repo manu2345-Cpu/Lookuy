@@ -346,53 +346,25 @@ async def txt_handler(bot: Client, m: Message):
 
                 elif ".pdf" in url:
                     try:
+                        # Download PDF logic
                         await asyncio.sleep(4)
-        # Replace spaces with %20 in the URL
                         url = url.replace(" ", "%20")
- 
-        # Create a cloudscraper session
                         scraper = cloudscraper.create_scraper()
-
-        # Send a GET request to download the PDF
                         response = scraper.get(url)
-
-        # Check if the response status is OK
                         if response.status_code == 200:
-            # Write the PDF content to a file
                             with open(f'{name}.pdf', 'wb') as file:
                                 file.write(response.content)
-
-            # Send the PDF document
                             await asyncio.sleep(4)
                             copy = await bot.send_document(chat_id=m.chat.id, document=f'{name}.pdf', caption=cc1)
-
-            # Remove the PDF file after sending
                             os.remove(f'{name}.pdf')
                         else:
                             await m.reply_text(f"Failed to download PDF: {response.status_code} {response.reason}")
-
                     except FloodWait as e:
                         await m.reply_text(str(e))
                         time.sleep(e.x)
-                        continue
                     finally:
-                        count += 1
-
-                elif ".pdf" in url:
-                    try:
-                        cmd = f'yt-dlp -o "{name}.pdf" "{url}"'
-                        download_cmd = f"{cmd} -R 25 --fragment-retries 25"
-                        os.system(download_cmd)
-                        copy = await bot.send_document(chat_id=m.chat.id, document=f'{name}.pdf', caption=cc1)
-                        os.remove(f'{name}.pdf')
-                    except FloodWait as e:
-                        await m.reply_text(str(e))
-                        time.sleep(e.x)
-                        count += 1
-                        continue        
-                    finally:
-                        count += 1
-                          
+                        count += 1  # Increment count by 1
+               
                 else:
                     Show = f"🇩‌🇴‌🇼‌🇳‌🇱‌🇴‌🇦‌🇩‌🇮‌🇳‌🇬‌⟱ »\n\n📄 Title:- `{name}\n\n⌨ 𝐐𝐮𝐥𝐢𝐭𝐲 » {raw_text2}`\n\n**🔗 𝐔𝐑𝐋 »** `{url}`\n\n**𝐁𝐨𝐭 𝐌𝐚𝐝𝐞 𝐁𝐲 ✦ 🅽🅸🅺🅷🅸🅻 🆂🅰🅸🅽🅸"
                     prog = await m.reply_text(Show)
