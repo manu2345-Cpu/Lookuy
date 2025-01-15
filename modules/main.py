@@ -374,7 +374,6 @@ async def txt_handler(bot: Client, m: Message):
                     except FloodWait as e:
                         await m.reply_text(str(e))
                         time.sleep(e.x)
-                        count += 1
                         continue
                     finally:
                         count += 1
