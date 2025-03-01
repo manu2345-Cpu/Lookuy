@@ -34,7 +34,7 @@
         "MONGO_URI": {
             "description": "Enter your MongoDB connection string",
             "value": "",
-            "required": true
+            "required": false
         }
     },
     "addons": [],
